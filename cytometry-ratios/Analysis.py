@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.ndimage import gaussian_filter
+
 
 """
 
@@ -8,9 +8,7 @@ Analysis Functionality
 
 - Calculate max values
 - Calculate mean, rms, std1/2
-- Normalize exposures
-- Spatial Normalization
-
+- Generate plots
 """
 
 class Analysis:
@@ -32,9 +30,9 @@ class Analysis:
 		self.mean = np.mean(self.maxUV - self.maxBlue)
 		return self.mean
 
-	def calcRMS(self):
-		self.RMS = np.sqrt(np.mean((self.maxUV-self.maxBlue)**2))
-		return self.RMS
+	def calcRMSError(self):
+		self.RMSError = np.sqrt(np.mean((self.maxUV-self.maxBlue)**2))
+		return self.RMSError
 
 	def calcStdDev(self):
 		self.stdUV = np.std(self.maxUV)
@@ -42,10 +40,10 @@ class Analysis:
 		return self.stdUV, self.stdBlue
 
 	def calcStats(self):
-		return calcMean(), calcRMS(), calcStdDev()
+		return self.calcMean(), self.calcRMSError(), self.calcStdDev()
 	
 	#Plot the maximum values for UV and Blue LED	
-	def generatePlots():
+	def generatePlots(self):
 		plt.figure()
 		plt.plot(self.maxUV,'r',label='UV')
 		plt.plot(self.maxBlue,'b',label='Blue')
